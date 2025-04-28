@@ -47,6 +47,7 @@ export default function Home() {
       setMessage("✅ File uploaded successfully!");
       // After upload, refresh the list of files
       fetchFiles();
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
     } catch (err: any) {
       console.error(err);
       setMessage("❌ Upload failed: " + err.message);
@@ -66,25 +67,25 @@ export default function Home() {
   };
 
   const handleDelete = async (fileKey: string) => {
-    if (!window.confirm(`Are you sure you want to delete ${fileKey}?`)) return;
+    if (!window.confirm(Are you sure you want to delete ${fileKey}?)) return;
 
     try {
       // Delete from S3
-      const deleteRes = await fetch(`/api/s3-delete`, {
+      const deleteRes = await fetch(/api/s3-delete, {
         method: "DELETE",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ fileKey }),
       });
 
       if (!deleteRes.ok) {
-        setMessage(`❌ Failed to delete ${fileKey}`);
+        setMessage(❌ Failed to delete ${fileKey});
         return;
       }
 
       // If S3 delete is successful, remove from the list
       setFilesList((prevFiles) => prevFiles.filter((file) => file !== fileKey));
 
-      setMessage(`✅ ${fileKey} deleted successfully from S3!`);
+      setMessage(✅ ${fileKey} deleted successfully from S3!);
     } catch (err) {
       console.error(err);
       setMessage("❌ Error deleting file: " + err.message);
